@@ -31,4 +31,15 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'img', src: image.url
   end
+
+  test "display all saved images on index page" do
+    7.times do
+      Image.create!(url: VALID_IMAGE_URL)
+    end
+
+    get :index
+    assert_response :success
+    assert_select 'img.collection_image', {count: Image.count, src: VALID_IMAGE_URL},
+                  'Wrong number of images displayed'
+  end
 end
