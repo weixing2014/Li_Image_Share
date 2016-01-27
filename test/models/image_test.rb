@@ -3,18 +3,18 @@ require 'test_helper'
 class ImageTest < ActiveSupport::TestCase
   test "url should not be null" do
     image = Image.new
-    assert image.invalid?
-    assert_equal({url: ["can't be blank"]}, image.errors.messages)
+    assert_predicate image, :invalid?
+    assert_equal(["can't be blank"], image.errors.messages[:url])
   end
 
   test "url should not be empty string" do
     image = Image.new(url: "")
-    assert image.invalid?
-    assert_equal({url: ["can't be blank"]}, image.errors.messages)
+    assert_predicate image, :invalid?
+    assert_equal(["can't be blank"], image.errors.messages[:url])
   end
 
-  test "can save valid image" do
+  test "image with url is valid" do
     image = Image.new(url: "http://www.image.com/images/1")
-    assert image.save
+    assert_predicate image, :valid?
   end
 end
