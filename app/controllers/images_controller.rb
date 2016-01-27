@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
       redirect_to image_path(@image)
     else
       flash.now[:error] = @image.errors.full_messages.first
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
