@@ -22,3 +22,4 @@ class ImagesController < ApplicationController
     @images = Image.all
   end
 end
+

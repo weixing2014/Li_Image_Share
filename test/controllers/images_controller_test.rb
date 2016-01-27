@@ -34,7 +34,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   test "display all saved images on index page" do
     7.times do
-      Image.create(url: VALID_IMAGE_URL)
+      Image.create!(url: VALID_IMAGE_URL)
     end
 
     get :index
