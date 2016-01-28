@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  before_action :find_image, only: [:show, :destroy]
+
   def new
     @image = Image.new
   end
@@ -16,11 +18,21 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @image = Image.find(params[:id])
   end
 
   def index
     @images = Image.all
   end
-end
 
+  def destroy
+    @image.destroy!
+    flash[:notice] = 'Your selected image has been deleted.'
+    redirect_to action: :index, status: 303
+  end
+
+  private
+
+  def find_image
+    @image = Image.find(params[:id])
+  end
+end

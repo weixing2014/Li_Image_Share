@@ -1,1 +1,6 @@
+<%= link_to 'Delete the Image', image_path(@image), method: :delete,
+            data: { confirm: "Are you sure to delete this image?" } %>
+
+<hr>
+
 <%= image_tag(@image.url) %>

@@ -58,4 +58,23 @@ class ImagesControllerTest < ActionController::TestCase
                    elements.map { |el| el[:src] }
     end
   end
+
+  test 'delete a saved image with a valid id' do
+    image = Image.create!(url: VALID_IMAGE_URL)
+
+    assert_difference('Image.count', -1) do
+      delete :destroy, id: image.id
+    end
+
+    assert_equal 'Your selected image has been deleted.', flash[:notice]
+    assert_redirected_to action: :index
+  end
+
+  test 'fail to delete a saved image with an invalid id' do
+    assert_no_difference('Image.count') do
+      assert_raises ActiveRecord::RecordNotFound do
+        delete :destroy, id: -1
+      end
+    end
+  end
 end
