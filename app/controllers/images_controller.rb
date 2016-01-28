@@ -7,6 +7,7 @@ class ImagesController < ApplicationController
     url    = params[:image][:url]
     @image = Image.new(url: url)
     if @image.save
+      flash[:notice] = 'You have successfully uploaded the image!'
       redirect_to image_path(@image)
     else
       flash.now[:error] = @image.errors.full_messages.first
