@@ -7,10 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if flash[:error].present? %>
-    <p>
-      <%= flash[:error] %>
-    </p>
+  <% case %>
+  <% when flash[:error].present? %>
+    <p><%= flash[:error] %></p>
+  <% when flash[:notice].present? %>
+    <p><%= flash[:notice] %></p>
   <% end %>
 
   <%= yield %>
