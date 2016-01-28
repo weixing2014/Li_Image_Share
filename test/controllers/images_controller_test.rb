@@ -29,7 +29,9 @@ class ImagesControllerTest < ActionController::TestCase
     image = Image.create(url: VALID_IMAGE_URL)
     get :show, id: image.id
     assert_response :success
-    assert_select 'img', src: image.url
+    assert_select 'img' do |elements|
+      assert_equal [image.url], elements.map {|el| el[:src]}
+    end
   end
 
   test "display all saved images on index page" do
@@ -39,7 +41,8 @@ class ImagesControllerTest < ActionController::TestCase
 
     get :index
     assert_response :success
-    assert_select 'img.collection_image', {count: Image.count, src: VALID_IMAGE_URL},
-                  'Wrong number of images displayed'
+    assert_select 'img.collection_image' do |elements|
+      assert_equal [VALID_IMAGE_URL] * Image.count, elements.map { |el| el[:src] }
+    end
   end
 end
