@@ -1,31 +1,43 @@
 require 'test_helper'
 
 class UrlValidatorTest < ActiveSupport::TestCase
+
+  class Validatable
+    include ActiveModel::Validations
+    validates :url, url: true
+  end
+
   setup do
-    @validator = UrlValidator.new(attributes: 'a')
-    @dummy_image = mock('image')
+    @validator = Validatable.new
   end
 
-  test 'validate valid URL' do
-    @dummy_image.expects('errors').never
-
-    @validator.validate_each(@dummy_image, 'url', 'http://www.example.com/images/1')
+  test 'validates valid http URLs' do
+    @validator.stubs(:url).returns('http://www.example.com/images/1')
+    assert_predicate @validator, :valid?
   end
 
-  test 'validate all white space URL' do
-    @dummy_image.expects('errors').never
-
-    @validator.validate_each(@dummy_image, 'url', '     ')
+  test 'validates valid https URLs' do
+    @validator.stubs(:url).returns('https://www.example.com/images/8')
+    assert_predicate @validator, :valid?
   end
 
-  test 'validate invalid URl' do
-    error = mock('error')
-    error_message = mock('error_message')
+  test 'ignores empty string URLs' do
+    @validator.stubs(:url).returns('   ')
+    assert_predicate @validator, :valid?
+  end
 
-    @dummy_image.expects('errors').once.returns(error)
-    error.expects('[]').with('url').once.returns(error_message)
-    error_message.expects('<<').once
+  test 'validates random strings as invalid URLs' do
+    @validator.stubs(:url).returns('You are right, I am invalid')
+    assert_predicate @validator, :invalid?
+  end
 
-    @validator.validate_each(@dummy_image, 'url', 'You are right, I am invalid')
+  test 'validates URLs with wrong protocol types as invalid' do
+    @validator.stubs(:url).returns('hp://www.something.com')
+    assert_predicate @validator, :invalid?
+  end
+
+  test 'validates URLs missing colon as invalid' do
+    @validator.stubs(:url).returns('http//www.example.com/images/2')
+    assert_predicate @validator, :invalid?
   end
 end
