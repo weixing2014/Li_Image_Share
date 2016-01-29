@@ -21,6 +21,6 @@ class ImageTest < ActiveSupport::TestCase
   test 'image with invalid url' do
     image = Image.new(url: 'h//www.image.com')
     assert_predicate image, :invalid?
-    assert_equal(['invalid URL'], image.errors.messages[:url])
+    assert_equal(['is invalid!'], image.errors.messages[:url])
   end
 end
