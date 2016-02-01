@@ -47,6 +47,10 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'mocha'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
