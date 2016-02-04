@@ -1,7 +1,9 @@
 <h1>Please add image URL below</h1>
 
 <%= form_for @image do |f| %>
-    <%= f.label :url %>:
-    <%= f.text_field :url %><br />
-    <%= f.submit %>
+  <%= f.label :url %>:
+  <%= f.text_field :url %><br>
+  <%= f.label :tags %>:
+  <%= f.text_field :tag_list %><br>
+  <%= f.submit %>
 <% end %>

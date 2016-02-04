@@ -25,6 +25,42 @@ class ImagesControllerTest < ActionController::TestCase
     assert_select 'form#new_image'
   end
 
+  test 'create an image with tags successfully' do
+    assert_difference('Image.count', 1) do
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: 'awsome, good' }
+    end
+
+    assert_equal %w(awsome good), Image.last.tag_list
+    assert_redirected_to image_path(assigns(:image))
+  end
+
+  test 'create an image with tag list as a string array' do
+    assert_difference('Image.count', 1) do
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: %w(awsome, good) }
+    end
+
+    assert_equal %w(awsome good), Image.last.tag_list
+    assert_redirected_to image_path(assigns(:image))
+  end
+
+  test 'create an image with tag list as an integer array' do
+    assert_difference('Image.count', 1) do
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: [1, 2] }
+    end
+
+    assert_equal %w(1 2), Image.last.tag_list
+    assert_redirected_to image_path(assigns(:image))
+  end
+
+  test 'create an image omitting white space tag' do
+    assert_difference('Image.count', 1) do
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: '     ' }
+    end
+
+    assert_equal [], Image.last.tag_list
+    assert_redirected_to image_path(assigns(:image))
+  end
+
   test 'show new image page' do
     get :new
     assert_response :success

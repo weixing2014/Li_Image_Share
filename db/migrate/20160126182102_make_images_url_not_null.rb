@@ -1,4 +1,4 @@
-class MakeImageUrlNotNull < ActiveRecord::Migration
+class MakeImagesUrlNotNull < ActiveRecord::Migration
   def change
     reversible do |dir|
       dir.up do
