@@ -6,8 +6,11 @@ class ImagesController < ApplicationController
   end
 
   def create
-    url    = params[:image][:url]
-    @image = Image.new(url: url)
+    url = params[:image][:url]
+    tags = params[:image][:tag_list]
+
+    @image = Image.new(url: url, tag_list: tags)
+
     if @image.save
       flash[:notice] = 'You have successfully uploaded the image!'
       redirect_to image_path(@image)
