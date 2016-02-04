@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'images#index'
 
   resources :images
+  resources :tags, only: [:show], param: :tag_name
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
