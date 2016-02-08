@@ -11,4 +11,4 @@
 
 <hr>
 
-<%= render_tag_links(@image.tag_list) %>
+<%=  render partial: 'images/tag_link', collection: @image.tag_list %>
