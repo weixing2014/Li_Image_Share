@@ -67,6 +67,56 @@ class ImagesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'display all images with one tag on index page' do
+    images = []
+    2.times { images << create_image(tag_list: 'green') }
+    2.times { create_image(tag_list: 'red') }
+
+    get :index, tag: 'green'
+    assert_response :success
+    assert_select 'a.image_show' do |elements|
+      assert_equal images.map { |image| "/images/#{image.id}" },
+                   elements.map { |el| el[:href] }
+    end
+
+    assert_select 'a.back_link' do |elements|
+      assert_equal [images_path], elements.map { |el| el[:href] }
+    end
+  end
+
+  test 'display all images with more than one tag on index page' do
+    images = []
+    2.times { images << create_image(tag_list: 'red, blue') }
+    2.times { images << create_image(tag_list: 'blue') }
+    get :index, tag: 'blue'
+    assert_response :success
+    assert_select 'a.image_show' do |elements|
+      assert_equal images.map { |image| "/images/#{image.id}" },
+                   elements.map { |el| el[:href] }
+    end
+
+    assert_select 'a.back_link' do |elements|
+      assert_equal [images_path], elements.map { |el| el[:href] }
+    end
+  end
+
+  test 'display all images on index page if given tag is invalid' do
+    images = []
+    2.times { images << create_image(tag_list: 'red, blue') }
+    2.times { images << create_image(tag_list: 'blue') }
+
+    get :index, tag: 'invalid'
+    assert_response :success
+    assert_equal 'No such tag exists!', flash[:notice]
+
+    assert_select 'a.image_show' do |elements|
+      assert_equal images.map { |image| "/images/#{image.id}" },
+                   elements.map { |el| el[:href] }
+    end
+
+    assert_select 'a.back_link', 0
+  end
+
   test 'delete a saved image with a valid id' do
     image = create_image(tag_list: nil)
 

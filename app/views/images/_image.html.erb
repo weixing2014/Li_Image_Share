@@ -1,3 +1,3 @@
-<%= link_to image_tag(image.url, class: 'collection_image'), image_path(image) %>
+<%= link_to image_tag(image.url, class: 'collection_image'), image_path(image), class: 'image_show'%>
 
 <%= render partial: 'images/tag_link', collection: image.tag_list %>

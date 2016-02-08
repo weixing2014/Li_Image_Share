@@ -6,10 +6,7 @@ class ImagesController < ApplicationController
   end
 
   def create
-    url = params[:image][:url]
-    tags = params[:image][:tag_list]
-
-    @image = Image.new(url: url, tag_list: tags)
+    @image = Image.new(image_params)
 
     if @image.save
       flash[:notice] = 'You have successfully uploaded the image!'
@@ -24,7 +21,19 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.all
+    tag = params[:tag]
+
+    if tag.present?
+      if ActsAsTaggableOn::Tag.exists?(name: tag)
+        @images = Image.tagged_with(tag)
+        render :index_with_tag
+      else
+        flash.now[:notice] = 'No such tag exists!'
+        @images = Image.all
+      end
+    else
+      @images = Image.all
+    end
   end
 
   def destroy
@@ -37,5 +46,9 @@ class ImagesController < ApplicationController
 
   def find_image
     @image = Image.find(params[:id])
+  end
+
+  def image_params
+    params.require(:image).permit(:url, :tag_list)
   end
 end

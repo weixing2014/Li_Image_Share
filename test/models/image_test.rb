@@ -23,4 +23,16 @@ class ImageTest < ActiveSupport::TestCase
     assert_predicate image, :invalid?
     assert_equal(['is invalid!'], image.errors.messages[:url])
   end
+
+  test 'remove unused tag after deleting image' do
+    image = Image.create!(url: "http://www.image.com/images/1", tag_list: 'awesome')
+
+    assert_difference('ActsAsTaggableOn::Tag.count', -1) do
+      assert_difference('ActsAsTaggableOn::Tagging.count', -1) do
+        image.destroy!
+      end
+    end
+
+    assert_not ActsAsTaggableOn::Tag.exists?(name: 'awesome')
+  end
 end
