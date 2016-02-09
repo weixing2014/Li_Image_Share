@@ -5,3 +5,7 @@
 <hr>
 
 <%= render @images %>
+
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'images/index/index' %>
+<% end %>
