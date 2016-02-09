@@ -23,15 +23,11 @@ class ImagesController < ApplicationController
   def index
     tag = params[:tag]
 
-    if tag.present?
-      if ActsAsTaggableOn::Tag.exists?(name: tag)
-        @images = Image.tagged_with(tag)
-        render :index_with_tag
-      else
-        flash.now[:notice] = 'No such tag exists!'
-        @images = Image.all
-      end
+    if ActsAsTaggableOn::Tag.exists?(name: tag)
+      @filtered = true
+      @images = Image.tagged_with(tag)
     else
+      flash.now[:notice] = 'No such tag exists!' if tag.present?
       @images = Image.all
     end
   end
