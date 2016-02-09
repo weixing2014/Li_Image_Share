@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root 'images#index'
 
   resources :images, except: [:update, :edit]
+  resources :tags, only: [:index]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
