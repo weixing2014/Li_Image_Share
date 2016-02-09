@@ -1,10 +1,6 @@
-<div>
-  <%= link_to 'New Image', new_image_path %>
-  <%=  link_to 'All Images', images_path, class: 'back_link' if @filtered%>
-</div>
+<%= link_to 'New Image', new_image_path %>
+<%= link_to 'All Images', images_path, class: 'back_link' if @filtered%>
 
 <hr>
 
-<div>
-  <%= render @images %>
-</div>
+<%= render @images %>
