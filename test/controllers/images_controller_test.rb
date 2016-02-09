@@ -44,6 +44,7 @@ class ImagesControllerTest < ActionController::TestCase
     image = create_image(tag_list: nil)
 
     get :show, id: image.id
+
     assert_response :success
     assert_select 'img' do |elements|
       assert_equal [image.url], elements.map { |el| el[:src] }
@@ -60,6 +61,7 @@ class ImagesControllerTest < ActionController::TestCase
     7.times { create_image(tag_list: nil) }
 
     get :index
+
     assert_response :success
     assert_select 'img.collection_image' do |elements|
       assert_equal [VALID_IMAGE_URL] * Image.count,
@@ -73,6 +75,7 @@ class ImagesControllerTest < ActionController::TestCase
     2.times { create_image(tag_list: 'red') }
 
     get :index, tag: 'green'
+
     assert_response :success
     assert_select 'a.image_show' do |elements|
       assert_equal images.map { |image| "/images/#{image.id}" },
@@ -92,7 +95,9 @@ class ImagesControllerTest < ActionController::TestCase
     images = []
     2.times { images << create_image(tag_list: 'red, blue') }
     2.times { images << create_image(tag_list: 'blue') }
+
     get :index, tag: 'blue'
+
     assert_response :success
     assert_select 'a.image_show' do |elements|
       assert_equal images.map { |image| "/images/#{image.id}" },
@@ -114,6 +119,7 @@ class ImagesControllerTest < ActionController::TestCase
     2.times { images << create_image(tag_list: 'blue') }
 
     get :index, tag: 'invalid'
+
     assert_response :success
     assert_equal 'No such tag exists!', flash[:notice]
 
