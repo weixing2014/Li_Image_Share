@@ -17,3 +17,6 @@
 /tmp
 # Ignore all system files.
 .#*
+
+# Ignore node modules
+node_modules
