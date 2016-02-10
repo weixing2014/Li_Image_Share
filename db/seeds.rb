@@ -28,4 +28,11 @@ urls = %w(
   https://media.giphy.com/media/13uaMxgBhGP9ba/giphy.gif
 )
 
-urls.each { |url| Image.create!(url: url) }
+tag_list = %w(
+  cute wow! wow! great wow!
+  what! relax fly nice cool
+  ski puppy hungry hungry cry
+  Aha! ski lookAtMe love soWhat
+)
+
+urls.each_with_index { |url, index| Image.create!(url: url, tag_list: tag_list[index]) }

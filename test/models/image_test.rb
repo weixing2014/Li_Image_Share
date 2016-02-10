@@ -2,24 +2,36 @@ require 'test_helper'
 
 class ImageTest < ActiveSupport::TestCase
   test 'url should not be null' do
-    image = Image.new
+    image = Image.new(tag_list: 'good')
     assert_predicate image, :invalid?
     assert_equal(["can't be blank"], image.errors.messages[:url])
   end
 
-  test 'url should not be empty string' do
-    image = Image.new(url: "")
+  test 'url should not be blank' do
+    image = Image.new(url: " ", tag_list: 'good')
     assert_predicate image, :invalid?
     assert_equal(["can't be blank"], image.errors.messages[:url])
   end
 
-  test 'image with valid url' do
+  test 'tag_list should not be null' do
     image = Image.new(url: "http://www.image.com/images/1")
+    assert_predicate image, :invalid?
+    assert_equal(["can't be blank"], image.errors.messages[:tag_list])
+  end
+
+  test 'tag_list should not be blank' do
+    image = Image.new(url: "http://www.image.com/images/1", tag_list: ' ')
+    assert_predicate image, :invalid?
+    assert_equal(["can't be blank"], image.errors.messages[:tag_list])
+  end
+
+  test 'image with valid url and tags list' do
+    image = Image.new(url: "http://www.image.com/images/1", tag_list: 'good')
     assert_predicate image, :valid?
   end
 
   test 'image with invalid url' do
-    image = Image.new(url: 'h//www.image.com')
+    image = Image.new(url: 'h//www.image.com', tag_list: 'good')
     assert_predicate image, :invalid?
     assert_equal(['is invalid!'], image.errors.messages[:url])
   end
