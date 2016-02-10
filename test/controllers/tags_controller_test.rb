@@ -13,7 +13,7 @@ class TagsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'a.tag_link' do |elements|
       assert_equal tags.map { |tag| "##{tag}" }, elements.map(&:text)
-      assert_equal tags.map { |tag| "/images?tag=#{tag}" },
+      assert_equal tags.map { |tag| images_path(tag: tag) },
                    elements.map { |el| el[:href] }
     end
   end
