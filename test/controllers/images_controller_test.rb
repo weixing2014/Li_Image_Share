@@ -78,7 +78,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_select 'a.image_show' do |elements|
-      assert_equal images.map { |image| "/images/#{image.id}" },
+      assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
@@ -100,7 +100,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_select 'a.image_show' do |elements|
-      assert_equal images.map { |image| "/images/#{image.id}" },
+      assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
@@ -124,7 +124,7 @@ class ImagesControllerTest < ActionController::TestCase
     assert_equal 'No such tag exists!', flash[:notice]
 
     assert_select 'a.image_show' do |elements|
-      assert_equal images.map { |image| "/images/#{image.id}" },
+      assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
