@@ -1,10 +1,10 @@
-<%= link_to 'New Image', new_image_path %>
-<%= link_to 'All Tags', tags_path %>
-<%= link_to 'All Images', images_path, class: 'back_link' if @filtered%>
+<%= link_to 'New Image', new_image_path, type: 'button', class: 'btn btn-primary'%>
 
 <hr>
 
-<%= render @images %>
+<div class="row">
+  <%= render @images %>
+</div>
 
 <% content_for :javascript do %>
   <%= javascript_include_tag 'images/index/index' %>

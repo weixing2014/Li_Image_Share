@@ -1,1 +1,3 @@
-<%= link_to "##{tag.name}", images_path(tag: tag.name), class: 'tag_link' %>
+<li class="list-group-item">
+  <%= link_to "##{tag.name}", images_path(tag: tag.name), class: 'js-tag-link' %>
+</li>

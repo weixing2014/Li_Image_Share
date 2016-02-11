@@ -65,7 +65,7 @@ class ImagesControllerTest < ActionController::TestCase
     get :index
 
     assert_response :success
-    assert_select 'img.collection_image' do |elements|
+    assert_select 'img.image-container__image' do |elements|
       assert_equal [VALID_IMAGE_URL] * Image.count,
                    elements.map { |el| el[:src] }
     end
@@ -79,12 +79,12 @@ class ImagesControllerTest < ActionController::TestCase
     get :index, tag: 'green'
 
     assert_response :success
-    assert_select 'a.image_show' do |elements|
+    assert_select 'a.js-image-show' do |elements|
       assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
-    assert_select 'img.collection_image' do |elements|
+    assert_select 'img.image-container__image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
     end
   end
@@ -97,12 +97,12 @@ class ImagesControllerTest < ActionController::TestCase
     get :index, tag: 'blue'
 
     assert_response :success
-    assert_select 'a.image_show' do |elements|
+    assert_select 'a.js-image-show' do |elements|
       assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
-    assert_select 'img.collection_image' do |elements|
+    assert_select 'img.image-container__image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
     end
   end
@@ -117,12 +117,12 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'No such tag exists!', flash[:notice]
 
-    assert_select 'a.image_show' do |elements|
+    assert_select 'a.js-image-show' do |elements|
       assert_equal images.map { |image| image_path(image) },
                    elements.map { |el| el[:href] }
     end
 
-    assert_select 'img.collection_image' do |elements|
+    assert_select 'img.image-container__image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
     end
   end

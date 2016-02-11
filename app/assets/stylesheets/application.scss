@@ -1,0 +1,12 @@
+$brand-primary : #9b59b6;
+$enable-flex : true;
+$gray-lightest : #9b59b6;
+$grid-gutter-width : 0.75rem;
+$navbar-light-active-color : #ecffbb;
+$navbar-light-color : white;
+
+@import "bootstrap";
+
+@import "footer";
+@import "image-container";
+@import "site";
