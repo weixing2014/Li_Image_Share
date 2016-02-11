@@ -13,7 +13,9 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :unprocessable_entity
-    assert_equal "Url can't be blank", flash[:error]
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
     assert_select 'form#new_image'
   end
 
@@ -23,7 +25,9 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :unprocessable_entity
-    assert_equal "Tag list can't be blank", flash[:error]
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
     assert_select 'form#new_image'
   end
 
@@ -168,7 +172,9 @@ class ImagesControllerTest < ActionController::TestCase
     patch :update, id: image.id, image: { url: VALID_IMAGE_URL, tag_list: '  ' }
 
     assert_response :unprocessable_entity
-    assert_equal "Tag list can't be blank", flash[:error]
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
     assert_select 'form#edit_image_1'
   end
 
