@@ -6,16 +6,27 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <% case %>
-  <% when flash[:error].present? %>
-    <p><%= flash[:error] %></p>
-  <% when flash[:notice].present? %>
-    <p><%= flash[:notice] %></p>
-  <% end %>
+<body class="site">
+  <%= render partial: 'layouts/top_bar' %>
 
-  <%= yield %>
+  <main class="site__main-content">
+    <div class="container">
+      <% case %>
+      <% when flash[:error].present? %>
+        <div class="alert alert-danger" role="alert">
+          <strong><%= flash[:error] %></strong>
+        </div>
+      <% when flash[:notice].present? %>
+        <div class="alert alert-success" role="alert">
+          <strong><%= flash[:notice] %></strong>
+        </div>
+      <% end %>
 
+      <%= yield %>
+    </div>
+  </main>
+
+  <%= render partial: 'layouts/footer' %>
   <%= yield :javascript %>
 </body>
 </html>

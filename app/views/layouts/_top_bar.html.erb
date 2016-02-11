@@ -1,0 +1,9 @@
+<nav class="navbar navbar-fixed-top navbar-light bg-faded">
+  <div class="container">
+    <%= link_to 'FunGraph', images_path, class: 'navbar-brand' %>
+    <ul class="nav navbar-nav">
+      <%= render_nav_item link_to('Images', images_path, class: 'nav-link'), params[:controller] == 'images' %>
+      <%= render_nav_item link_to('Tags', tags_path, class: 'nav-link'), params[:controller] == 'tags' %>
+    </ul>
+  </div>
+</nav>
