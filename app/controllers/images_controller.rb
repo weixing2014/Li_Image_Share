@@ -46,7 +46,6 @@ class ImagesController < ApplicationController
       flash[:notice] = 'You successfully updated the image!'
       redirect_to action: :show
     else
-      @image.reload
       flash.now[:error] = @image.errors.full_messages.first
       render :edit, status: :unprocessable_entity
     end
