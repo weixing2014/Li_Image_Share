@@ -183,7 +183,7 @@ class ImagesControllerTest < ActionController::TestCase
     assert_equal %w(awesome good), image.reload.tag_list
 
     assert_equal 'You successfully updated the image!', flash[:notice]
-    assert_redirected_to image_path(assigns(:image))
+    assert_redirected_to image_path(image)
   end
 
   private
