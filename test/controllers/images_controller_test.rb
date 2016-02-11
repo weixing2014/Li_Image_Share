@@ -162,34 +162,6 @@ class ImagesControllerTest < ActionController::TestCase
     end
   end
 
-  test 'fail to update image with blank url' do
-    image = create_image
-
-    patch :update, id: image.id, image: { url: '  ', tag_list: 'good' }
-
-    assert_response :unprocessable_entity
-    assert_equal "Url can't be blank", flash[:error]
-
-    assert_select 'img.js-image-edit' do |elements|
-      assert_equal [image.url], elements.map { |el| el[:src] }
-    end
-
-    assert_select 'input.form-control' do |elements|
-      assert_equal [image.url, image.tag_list.join(', ')],
-                   elements.map { |el| el[:value] }
-    end
-  end
-
-  test 'fail to update image with invalid url' do
-    image = create_image
-
-    patch :update, id: image.id, image: { url: 'bad', tag_list: 'good' }
-
-    assert_response :unprocessable_entity
-    assert_equal 'Url is invalid!', flash[:error]
-    assert_select 'form#edit_image_1'
-  end
-
   test 'fail to update image with blank tags list' do
     image = create_image
 
