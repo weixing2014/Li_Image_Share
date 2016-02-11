@@ -7,21 +7,23 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'create a new image' do
-    assert_difference('Image.count', 1) do
-      post :create, image: { url: VALID_IMAGE_URL }
-    end
-
-    assert_redirected_to image_path(assigns(:image))
-  end
-
-  test 'fail to create a new image' do
+  test 'fail to create a new image with blank url' do
     assert_no_difference('Image.count') do
-      post :create, image: { url: '' }
+      post :create, image: { url: '', tag_list: 'good'}
     end
 
     assert_response :unprocessable_entity
     assert_equal "Url can't be blank", flash[:error]
+    assert_select 'form#new_image'
+  end
+
+  test 'fail to create a new image with blank tags list' do
+    assert_no_difference('Image.count') do
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: ''}
+    end
+
+    assert_response :unprocessable_entity
+    assert_equal "Tag list can't be blank", flash[:error]
     assert_select 'form#new_image'
   end
 
@@ -41,7 +43,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   test 'show an image' do
-    image = create_image(tag_list: nil)
+    image = create_image
 
     get :show, id: image.id
 
@@ -58,7 +60,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   test 'display all saved images on index page' do
-    7.times { create_image(tag_list: nil) }
+    7.times { create_image }
 
     get :index
 
@@ -85,10 +87,6 @@ class ImagesControllerTest < ActionController::TestCase
     assert_select 'img.collection_image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
     end
-
-    assert_select 'a.back_link' do |elements|
-      assert_equal [images_path], elements.map { |el| el[:href] }
-    end
   end
 
   test 'display all images with more than one tag on index page' do
@@ -106,10 +104,6 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_select 'img.collection_image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
-    end
-
-    assert_select 'a.back_link' do |elements|
-      assert_equal [images_path], elements.map { |el| el[:href] }
     end
   end
 
@@ -131,12 +125,10 @@ class ImagesControllerTest < ActionController::TestCase
     assert_select 'img.collection_image' do |elements|
       assert_equal images.map(&:url), elements.map { |el| el[:src] }
     end
-
-    assert_select 'a.back_link', 0
   end
 
   test 'delete a saved image with a valid id' do
-    image = create_image(tag_list: nil)
+    image = create_image
 
     assert_difference('Image.count', -1) do
       delete :destroy, id: image.id
