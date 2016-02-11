@@ -152,7 +152,7 @@ class ImagesControllerTest < ActionController::TestCase
     get :edit, id: image.id
 
     assert_response :success
-    assert_select 'img.js-image-edit' do |elements|
+    assert_select 'img.js-image-preview' do |elements|
       assert_equal [image.url], elements.map { |el| el[:src] }
     end
 
