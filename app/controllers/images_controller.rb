@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :find_image, only: [:show, :destroy]
+  before_action :find_image, only: [:show, :destroy, :edit, :update]
 
   def new
     @image = Image.new
@@ -36,6 +36,20 @@ class ImagesController < ApplicationController
     @image.destroy!
     flash[:notice] = 'Your selected image has been deleted.'
     redirect_to action: :index, status: 303
+  end
+
+  def edit
+  end
+
+  def update
+    if @image.update(image_params)
+      flash[:notice] = 'You successfully updated the image!'
+      redirect_to action: :show
+    else
+      @image.reload
+      flash.now[:error] = @image.errors.full_messages.first
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
