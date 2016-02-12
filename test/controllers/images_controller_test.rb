@@ -150,7 +150,7 @@ class ImagesControllerTest < ActionController::TestCase
     end
   end
 
-  test 'display image, its url and tags when edit page opened' do
+  test 'display image and its tags when edit page opened' do
     image = create_image
 
     get :edit, id: image.id
@@ -161,15 +161,21 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_select 'input.form-control' do |elements|
-      assert_equal [image.url, image.tag_list.join(', ')],
+      assert_equal [image.tag_list.join(', ')],
                    elements.map { |el| el[:value] }
+    end
+  end
+
+  test 'fail to edit when image is not found' do
+    assert_raises ActiveRecord::RecordNotFound do
+      get :edit, id: -1
     end
   end
 
   test 'fail to update image with blank tags list' do
     image = create_image
 
-    patch :update, id: image.id, image: { url: VALID_IMAGE_URL, tag_list: '  ' }
+    patch :update, id: image.id, image: { tag_list: '  ' }
 
     assert_response :unprocessable_entity
     assert_select 'span.help-block' do |elements|
@@ -178,18 +184,31 @@ class ImagesControllerTest < ActionController::TestCase
     assert_select 'form#edit_image_1'
   end
 
+  test 'fail to update when image is not found' do
+    assert_raises ActiveRecord::RecordNotFound do
+      patch :update, id: -1, image: { tag_list: 'good' }
+    end
+  end
+
+  test 'fail to update image with url parameter' do
+    image = create_image
+    patch :update, id: image.id, image: { url: VALID_IMAGE_URL,
+                                          tag_list: 'good' }
+
+    assert_response :bad_request
+  end
+
   test 'update an image successfully' do
     image = create_image
 
     assert_equal %w(tag1 tag2), image.tag_list
 
-    patch :update, id: image.id, image: { url: VALID_IMAGE_URL,
-                                          tag_list: 'awesome, good' }
+    patch :update, id: image.id, image: { tag_list: 'awesome, good' }
 
+    assert_redirected_to image_path(image)
     assert_equal %w(awesome good), image.reload.tag_list
 
     assert_equal 'You successfully updated the image!', flash[:notice]
-    assert_redirected_to image_path(image)
   end
 
   private

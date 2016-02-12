@@ -41,6 +41,10 @@ class ImagesController < ApplicationController
   end
 
   def update
+    if image_params.include?(:url)
+      render(nothing: true, status: :bad_request) && return
+    end
+
     if @image.update(image_params)
       flash[:notice] = 'You successfully updated the image!'
       redirect_to action: :show
