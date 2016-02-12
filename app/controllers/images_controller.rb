@@ -53,6 +53,9 @@ class ImagesController < ApplicationController
     end
   end
 
+  def share
+  end
+
   private
 
   def find_image

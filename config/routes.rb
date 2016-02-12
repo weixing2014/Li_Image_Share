@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   root 'images#index'
 
   resources :images
+
+  post '/images/share' => 'images#share', as: 'image_sharing'
+
   resources :tags, only: [:index]
 
   # Example of regular route:
