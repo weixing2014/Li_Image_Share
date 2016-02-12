@@ -1,1 +1,1 @@
-import hello from './hello';
+import shareImageModal from './share_image_modal';
