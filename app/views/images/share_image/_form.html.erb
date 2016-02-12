@@ -1,0 +1,20 @@
+<%= simple_form_for form, as: :share_image_form,
+  remote: true, url: (@image.present? ? share_image_path(@image) : ''),
+  html: { 'data-url-template': share_image_path('ID_PLACEHOLDER'),
+  class: 'js-share-image-form' } do |f| %>
+  <div class="modal-body">
+    <div class="image-container">
+      <%= image_tag (@image.present? ? @image.url : nil),
+                    class: 'js-share-image-preview image-container__preview' %>
+    </div>
+
+    <hr>
+
+    <%= f.input :recipient, label: 'Recipient:', input_html: { class: 'js-email-recipient' } %>
+    <%= f.input :subject, label: 'Subject:', input_html: { class: 'js-email-subject' } %>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <%= f.submit 'Send', class: "btn btn-primary" %>
+  </div>
+<% end %>

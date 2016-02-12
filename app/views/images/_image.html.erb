@@ -6,5 +6,8 @@
     <div class="card-block">
       <%= render partial: 'tag_link', collection: image.tag_list %>
     </div>
+    <div class="card-block">
+      <%= render partial: 'images/share_image/button', locals: { image: image } %>
+    </div>
   </div>
 </div>

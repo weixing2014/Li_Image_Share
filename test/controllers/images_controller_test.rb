@@ -211,6 +211,40 @@ class ImagesControllerTest < ActionController::TestCase
     assert_equal 'You successfully updated the image!', flash[:notice]
   end
 
+  test 'share image successfully' do
+    image = create_image
+    assert_difference('ActionMailer::Base.deliveries.size', 1) do
+      xhr :post, :share, id: image, share_image_form: {
+        recipient: 'foo@bar.com', subject: 'Share Image Title' }
+    end
+
+    assert_response :success
+
+    share_image_email = ActionMailer::Base.deliveries.last
+    assert_equal ['foo@bar.com'], share_image_email.to
+    assert_equal 'Share Image Title', share_image_email.subject
+  end
+
+  test 'fail to share image with invalid email recipient' do
+    image = create_image
+    assert_no_difference('ActionMailer::Base.deliveries.size') do
+      xhr :post, :share, id: image, share_image_form: {
+        recipient: 'invalid', subject: 'Share Image Title' }
+    end
+
+    assert_response :unprocessable_entity
+    assert_includes JSON.parse(@response.body)['form_html'], 'is invalid'
+  end
+
+  test 'fail to share image when image does not exist' do
+    assert_no_difference('ActionMailer::Base.deliveries.size') do
+      xhr :post, :share, id: -1, share_image_form: {
+        recipient: 'foo@bar.com', subject: 'Share Image Title' }
+    end
+
+    assert_response :not_found
+  end
+
   private
 
   def create_image(url: VALID_IMAGE_URL, tag_list: %w(tag1, tag2))
