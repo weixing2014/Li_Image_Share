@@ -1,5 +1,7 @@
 <div class="btn-group" role="group">
   <%= link_to 'Go Back', images_path, type: 'button', class: 'btn btn-primary' %>
+  <%= link_to 'Edit it', edit_image_path(@image), type: 'button',
+    class: 'btn btn-primary' %>
   <%= link_to 'Delete it', image_path(@image), method: :delete,
     data: { confirm: "Are you sure to delete this image?"},
     type: 'button', class: 'btn btn-primary' %>

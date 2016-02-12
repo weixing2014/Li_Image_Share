@@ -9,21 +9,25 @@ class ImagesControllerTest < ActionController::TestCase
 
   test 'fail to create a new image with blank url' do
     assert_no_difference('Image.count') do
-      post :create, image: { url: '', tag_list: 'good'}
+      post :create, image: { url: '', tag_list: 'good' }
     end
 
     assert_response :unprocessable_entity
-    assert_equal "Url can't be blank", flash[:error]
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
     assert_select 'form#new_image'
   end
 
   test 'fail to create a new image with blank tags list' do
     assert_no_difference('Image.count') do
-      post :create, image: { url: VALID_IMAGE_URL, tag_list: ''}
+      post :create, image: { url: VALID_IMAGE_URL, tag_list: '' }
     end
 
     assert_response :unprocessable_entity
-    assert_equal "Tag list can't be blank", flash[:error]
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
     assert_select 'form#new_image'
   end
 
@@ -144,6 +148,67 @@ class ImagesControllerTest < ActionController::TestCase
         delete :destroy, id: -1
       end
     end
+  end
+
+  test 'display image and its tags when edit page opened' do
+    image = create_image
+
+    get :edit, id: image.id
+
+    assert_response :success
+    assert_select 'img.js-image-preview' do |elements|
+      assert_equal [image.url], elements.map { |el| el[:src] }
+    end
+
+    assert_select 'input.form-control' do |elements|
+      assert_equal [image.tag_list.join(', ')],
+                   elements.map { |el| el[:value] }
+    end
+  end
+
+  test 'fail to edit when image is not found' do
+    assert_raises ActiveRecord::RecordNotFound do
+      get :edit, id: -1
+    end
+  end
+
+  test 'fail to update image with blank tags list' do
+    image = create_image
+
+    patch :update, id: image.id, image: { tag_list: '  ' }
+
+    assert_response :unprocessable_entity
+    assert_select 'span.help-block' do |elements|
+      assert_equal ["can't be blank"], elements.map(&:text)
+    end
+    assert_select 'form#edit_image_1'
+  end
+
+  test 'fail to update when image is not found' do
+    assert_raises ActiveRecord::RecordNotFound do
+      patch :update, id: -1, image: { tag_list: 'good' }
+    end
+  end
+
+  test 'fail to update image with url parameter' do
+    image = create_image
+    patch :update, id: image.id, image: { url: VALID_IMAGE_URL,
+                                          tag_list: 'good' }
+
+    assert_response :bad_request
+  end
+
+  test 'update an image successfully' do
+    image = create_image
+
+    assert_equal %w(tag1 tag2), image.tag_list
+
+    patch :update, id: image.id, image: { tag_list: 'awesome, good' }
+
+    assert_redirected_to image_path(image)
+    assert_equal %w(awesome good), image.reload.tag_list
+
+    assert_equal 'You successfully updated the image!', flash[:notice]
   end
 
   private
