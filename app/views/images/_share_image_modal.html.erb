@@ -1,4 +1,4 @@
-<div class="modal fade" id="imageShareModal" tabindex="-1" role="dialog" aria-labelledby="imageShareModalLabel" aria-hidden="true">
+<div class="modal fade" id="shareImageModal" tabindex="-1" role="dialog" aria-labelledby="shareImageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,7 +8,7 @@
         <h4 class="modal-title" id="myModalLabel">Share Image</h4>
       </div>
       <div class="modal-body">
-          <%= form_tag image_sharing_path do %>
+          <%= form_tag share_image_path do %>
             <div class="form-group">
               <%= label_tag :sharing_email, 'Email:', class: 'control-label' %>
               <%= text_field_tag :sharing_email, nil, class: 'form-control' %>
