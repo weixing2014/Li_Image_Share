@@ -6,6 +6,8 @@
   <%= render @images %>
 </div>
 
+<%= render partial: 'image_share_modal' %>
+
 <% content_for :javascript do %>
   <%= javascript_include_tag 'images/index/index' %>
 <% end %>

@@ -1,0 +1,28 @@
+<div class="modal fade" id="imageShareModal" tabindex="-1" role="dialog" aria-labelledby="imageShareModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Share Image</h4>
+      </div>
+      <div class="modal-body">
+          <%= form_tag image_sharing_path do %>
+            <div class="form-group">
+              <%= label_tag :sharing_email, 'Email:', class: 'control-label' %>
+              <%= text_field_tag :sharing_email, nil, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= label_tag :sharing_subject, 'Subject:', class: 'control-label' %>
+              <%= text_field_tag :sharing_subject, nil, class: 'form-control' %>
+            </div>
+          <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
