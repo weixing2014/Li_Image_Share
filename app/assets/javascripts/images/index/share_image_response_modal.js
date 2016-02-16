@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 
-class ShareImageResponseMessage {
+class ShareImageResponseModal {
   constructor() {
     this.$modal = $('#shareImageResponseMessage');
   }
@@ -20,7 +20,7 @@ class ShareImageResponseMessage {
   }
 
   replaceMessageText(title, body) {
-    const $label = this.$modal.find('#shareImageResponseMessageLabel');
+    const $label = this.$modal.find('.modal-title');
     const $messageBody = this.$modal.find('.modal-body');
 
     $label.text(title);
@@ -29,4 +29,4 @@ class ShareImageResponseMessage {
   }
 }
 
-export default ShareImageResponseMessage;
+export default ShareImageResponseModal;

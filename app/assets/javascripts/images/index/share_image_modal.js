@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 import ShareImageProgressBar from './share_image_progress_bar';
-import ShareImageResponseMessage from './share_image_response_message';
+import ShareImageResponseModal from './share_image_response_modal';
 
 const succeedMessage = `<p>Your image has been successfully shared!</p>`;
 const errorMessage = `<p>Sorry, your image is failed to share</p>`;
@@ -11,7 +11,7 @@ class ShareImageModal  {
   constructor() {
     this.$modal = $('#shareImageModal');
     this.$progressBar = new ShareImageProgressBar();
-    this.$responseMessage = new ShareImageResponseMessage();
+    this.$responseMessage = new ShareImageResponseModal();
   }
 
   addShareEvents() {
