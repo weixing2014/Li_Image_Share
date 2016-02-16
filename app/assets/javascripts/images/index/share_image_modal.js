@@ -9,18 +9,18 @@ const errorMessage = `<p>Sorry, your image is failed to share</p>`;
 
 class ShareImageModal  {
   constructor() {
-    this.$modal = $('#shareImageModal');
+    this.$modal = $('.js-share-image-modal');
     this.$progressBar = new ShareImageProgressBar();
     this.$responseMessage = new ShareImageResponseModal();
   }
 
   addShareEvents() {
-    const $form = this.$modal.find('#js-share-image-form');
-    const $imageId = this.$modal.find('#js-image-id');
-    const $imagePreview = this.$modal.find('#js-share-image-preview');
-    const $imageRecipient = this.$modal.find('#js-image-recipient');
-    const $emailSubject = this.$modal.find('#js-email-subject');
-    const $sendButton = this.$modal.find('#js-send-image');
+    const $form = this.$modal.find('.js-share-image-form');
+    const $imageId = this.$modal.find('.js-image-id');
+    const $imagePreview = this.$modal.find('.js-share-image-preview');
+    const $imageRecipient = this.$modal.find('.js-image-recipient');
+    const $emailSubject = this.$modal.find('.js-email-subject');
+    const $sendButton = this.$modal.find('.js-send-image');
     const $shareButton = $('.js-share-image');
 
     $shareButton.on('click', (event)=> {

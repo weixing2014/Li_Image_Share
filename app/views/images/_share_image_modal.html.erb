@@ -1,4 +1,4 @@
-<div class="modal fade" id="shareImageModal" tabindex="-1" role="dialog" aria-labelledby="shareImageModalLabel" aria-hidden="true">
+<div class="js-share-image-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="shareImageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,27 +9,26 @@
       </div>
       <div class="modal-body">
         <div class="image-container">
-          <%= image_tag nil, class:'image-container__preview',
-            id: 'js-share-image-preview' %>
+          <%= image_tag nil, class:'js-share-image-preview image-container__preview' %>
         </div>
 
         <hr>
 
-        <%= form_tag share_image_path, id: 'js-share-image-form' do %>
-          <%= text_field_tag 'js-image-id', nil, type: 'hidden' %>
+        <%= form_tag share_image_path, class: 'js-share-image-form' do %>
+          <%= text_field_tag 'image_id', nil, class: 'js-image-id', type: 'hidden' %>
           <div class="form-group">
-            <%= label_tag 'js-image-recipient', 'Recipient:', class: 'control-label' %>
-            <%= text_field_tag 'js-image-recipient', nil, class: 'form-control' %>
+            <%= label_tag 'image_recipient', 'Recipient:', class: 'control-label' %>
+            <%= text_field_tag 'image_recipient', nil, class: 'js-image-recipient form-control' %>
           </div>
           <div class="form-group">
-            <%= label_tag 'js-email-subject', 'Subject:', class: 'control-label' %>
-            <%= text_field_tag 'js-email-subject', nil, class: 'form-control' %>
+            <%= label_tag 'email_subject', 'Subject:', class: 'control-label' %>
+            <%= text_field_tag 'email_subject', nil, class: 'js-email-subject form-control' %>
           </div>
         <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="js-send-image">Send</button>
+        <button type="button" class="js-send-image btn btn-primary">Send</button>
       </div>
     </div>
   </div>

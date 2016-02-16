@@ -4,11 +4,11 @@ import $ from 'jquery';
 
 class ShareImageResponseModal {
   constructor() {
-    this.$modal = $('#shareImageResponseMessage');
+    this.$modal = $('.js-share-image-response-modal');
   }
 
   dismissed(eventHandler) {
-    const $dismissButton = this.$modal.find('#js-dismiss-message');
+    const $dismissButton = this.$modal.find('.js-dismiss-message');
 
     $dismissButton.on('click', eventHandler);
   }
@@ -20,8 +20,8 @@ class ShareImageResponseModal {
   }
 
   replaceMessageText(title, body) {
-    const $label = this.$modal.find('.modal-title');
-    const $messageBody = this.$modal.find('.modal-body');
+    const $label = this.$modal.find('.js-modal-title');
+    const $messageBody = this.$modal.find('.js-modal-body');
 
     $label.text(title);
     $messageBody.children().remove();
