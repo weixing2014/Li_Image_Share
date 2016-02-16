@@ -1,3 +1,5 @@
+<% share_image_form = ShareImageForm.new %>
+
 <div class="js-share-image-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="shareImageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -14,16 +16,12 @@
 
         <hr>
 
-        <%= form_tag share_image_path, class: 'js-share-image-form' do %>
-          <%= text_field_tag 'image_id', nil, class: 'js-image-id', type: 'hidden' %>
-          <div class="form-group">
-            <%= label_tag 'image_recipient', 'Recipient:', class: 'control-label' %>
-            <%= text_field_tag 'image_recipient', nil, class: 'js-image-recipient form-control' %>
-          </div>
-          <div class="form-group">
-            <%= label_tag 'email_subject', 'Subject:', class: 'control-label' %>
-            <%= text_field_tag 'email_subject', nil, class: 'js-email-subject form-control' %>
-          </div>
+        <%= simple_form_for share_image_form,
+          url: share_image_path,
+          class: 'js-share-image-form' do |f| %>
+          <%= f.input_field :image_id, class: 'js-image-id', type: 'hidden' %>
+          <%= f.input :recipient, label: 'Recipient:', input_html: { class: 'js-image-recipient' } %>
+          <%= f.input :subject, label: 'Subject:', input_html: { class: 'js-email-subject' } %>
         <% end %>
       </div>
       <div class="modal-footer">
