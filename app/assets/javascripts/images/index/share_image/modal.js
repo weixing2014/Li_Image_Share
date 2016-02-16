@@ -31,7 +31,6 @@ class Modal  {
       $imagePreview.attr('src', imageUrl);
       $imageId.val(imageId);
       $imageRecipient.val('');
-      $imageRecipient.focus();
       $emailSubject.val('');
     });
 
