@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :find_image, only: [:show, :destroy, :edit, :update]
+  before_action :find_image, only: [:show, :destroy, :edit, :update, :share]
 
   def new
     @image = Image.new
@@ -54,6 +54,13 @@ class ImagesController < ApplicationController
   end
 
   def share
+    respond_to do |format|
+      recipient = params[:recipient]
+      subject = params[:subject]
+
+      # ImageMailer.share_image_email(recipient, subject, @image.url)
+      format.html { render nothing: true, status: :unprocessable_entity }
+    end
   end
 
   private
