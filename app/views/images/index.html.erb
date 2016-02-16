@@ -6,9 +6,9 @@
   <%= render @images %>
 </div>
 
-<%= render partial: 'share_image_modal' %>
-<%= render partial: 'share_image_progress_bar' %>
-<%= render partial: 'share_image_response_modal' %>
+<%= render partial: 'images/share_image/modal' %>
+<%= render partial: 'images/share_image/progress_bar' %>
+<%= render partial: 'images/share_image/response_modal' %>
 
 <% content_for :javascript do %>
   <%= javascript_include_tag 'images/index/index' %>

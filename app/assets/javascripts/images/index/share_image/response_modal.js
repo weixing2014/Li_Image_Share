@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 
-class ShareImageResponseModal {
+class ResponseModal {
   constructor() {
     this.$modal = $('.js-share-image-response-modal');
   }
@@ -29,4 +29,4 @@ class ShareImageResponseModal {
   }
 }
 
-export default ShareImageResponseModal;
+export default ResponseModal;

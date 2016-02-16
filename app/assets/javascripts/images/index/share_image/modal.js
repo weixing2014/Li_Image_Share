@@ -1,17 +1,17 @@
 /*jshint esversion:6*/
 
 import $ from 'jquery';
-import ShareImageProgressBar from './share_image_progress_bar';
-import ShareImageResponseModal from './share_image_response_modal';
+import ProgressBar from './progress_bar';
+import ResponseModal from './response_modal';
 
 const succeedMessage = `<p>Your image has been successfully shared!</p>`;
 const errorMessage = `<p>Sorry, your image is failed to share</p>`;
 
-class ShareImageModal  {
+class Modal  {
   constructor() {
     this.$modal = $('.js-share-image-modal');
-    this.$progressBar = new ShareImageProgressBar();
-    this.$responseMessage = new ShareImageResponseModal();
+    this.$progressBar = new ProgressBar();
+    this.$responseMessage = new ResponseModal();
   }
 
   addShareEvents() {
@@ -75,4 +75,4 @@ class ShareImageModal  {
   }
 }
 
-export default ShareImageModal;
+export default Modal;

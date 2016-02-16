@@ -1,6 +1,6 @@
 /*jshint esversion:6*/
 
-import ShareImageModal from './share_image_modal';
+import Modal from './share_image/modal';
 
-const shareImageModal = new ShareImageModal();
+const shareImageModal = new Modal();
 shareImageModal.addShareEvents();

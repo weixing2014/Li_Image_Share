@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 
-class ShareImageProgressBar {
+class ProgressBar {
   constructor() {
     this.$modal = $('.js-share-image-progress-bar');
   }
@@ -19,4 +19,4 @@ class ShareImageProgressBar {
   }
 }
 
-export default ShareImageProgressBar;
+export default ProgressBar;
