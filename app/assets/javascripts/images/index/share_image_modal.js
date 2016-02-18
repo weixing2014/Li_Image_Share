@@ -10,11 +10,11 @@ class ShareImageModal  {
   constructor() {
     this.$modal = $('.js-share-image-modal');
     this.$successMessage = $('.js-share-image-success-message');
-    this.$blankModalHtml = $('.js-share-image-modal').html();
   }
 
   resetToBlankForm() {
-    this.$modal.html(this.$blankModalHtml);
+    this.$modal.find('input').val('');
+    this.$modal.find('.js-error-message').remove();
   }
 
   setErrorMsgForm(responseJSON) {
@@ -30,8 +30,6 @@ class ShareImageModal  {
   setImageInfo(imageUrl, imageId) {
     const $imagePreview = this.$modal.find('.js-share-image-preview');
     $imagePreview.attr('src', imageUrl);
-
-    this.setFormAction(imageId);
   }
 
   handleSharingSuccess() {
@@ -52,16 +50,16 @@ class ShareImageModal  {
 
   addShareEvents() {
     this.$modal.on('show.bs.modal', (event)=> {
-      let button = $(event.relatedTarget);
-      let imageUrl = button.data('image-url');
-      let imageId = button.data('image-id');
+      const button = $(event.relatedTarget);
+      const imageUrl = button.data('image-url');
+      const imageId = button.data('image-id');
 
       this.setImageInfo(imageUrl, imageId);
+      this.setFormAction(imageId);
     });
 
     this.$modal.on('shown.bs.modal', ()=> {
-      const $emailRecipient = this.$modal.find('.js-email-recipient');
-      $emailRecipient.focus();
+      this.$modal.find('.js-email-recipient').focus();
     });
 
     this.$modal.on('hidden.bs.modal', ()=> {
