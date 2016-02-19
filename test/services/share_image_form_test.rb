@@ -10,4 +10,18 @@ class ShareImageFormTest < ActiveSupport::TestCase
     form = ShareImageForm.new(subject: 'image')
     assert_equal 'image', form.subject
   end
+
+  test 'email addresses are properly validated' do
+    form = ShareImageForm.new(recipient: '@@bar.com')
+    assert_predicate form, :invalid?
+
+    form.recipient = 'dsfdf @bar.com'
+    assert_predicate form, :invalid?
+
+    form.recipient = 'd_sf,d@bar.com'
+    assert_predicate form, :invalid?
+
+    form.recipient = 'd_sf?d@bar.com'
+    assert_predicate form, :valid?
+  end
 end
