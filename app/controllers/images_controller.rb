@@ -1,5 +1,7 @@
 class ImagesController < ApplicationController
-  before_action :find_image, only: [:show, :destroy, :edit, :update]
+  before_action :find_image, only: [:show, :destroy, :edit, :update, :share]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
     @image = Image.new
@@ -53,6 +55,24 @@ class ImagesController < ApplicationController
     end
   end
 
+  def share
+    share_params = params.require(:share_image_form)
+                         .permit(:recipient, :subject)
+
+    share_image_form = ShareImageForm.new(share_params)
+
+    if share_image_form.valid?
+      ImageMailer.share_image_email(@image, share_image_form.recipient,
+                                    share_image_form.subject) .deliver_now
+
+      head :ok
+    else
+      form_html = render_to_string partial: 'images/share_image/form',
+                                   object: share_image_form
+      render json: { form_html: form_html }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def find_image
@@ -61,5 +81,13 @@ class ImagesController < ApplicationController
 
   def image_params
     params.require(:image).permit(:url, :tag_list)
+  end
+
+  def record_not_found(exception)
+    if request.xhr?
+      head :not_found
+    else
+      fail exception
+    end
   end
 end

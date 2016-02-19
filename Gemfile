@@ -32,6 +32,12 @@ gem 'bootstrap', '~>4.0.0.alpha3'
 
 gem 'simple_form'
 
+gem 'validates_email_format_of'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

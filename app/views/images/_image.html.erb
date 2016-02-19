@@ -4,7 +4,10 @@
       <%= link_to image_tag(image.url, class: 'image-container__image card-img-top'), image_path(image), class: 'js-image-show'%>
     </div>
     <div class="card-block">
-      <%= render partial: 'images/tag_link', collection: image.tag_list %>
+      <%= render partial: 'tag_link', collection: image.tag_list %>
+    </div>
+    <div class="card-block">
+      <%= render partial: 'images/share_image/button', locals: { image: image } %>
     </div>
   </div>
 </div>
