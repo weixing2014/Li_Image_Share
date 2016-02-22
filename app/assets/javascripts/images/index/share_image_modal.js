@@ -50,9 +50,9 @@ class ShareImageModal  {
 
   addShareEvents() {
     this.$modal.on('show.bs.modal', (event)=> {
-      const button = $(event.relatedTarget);
-      const imageUrl = button.data('image-url');
-      const imageId = button.data('image-id');
+      const $shareImageTrigger = $(event.relatedTarget);
+      const imageUrl = $shareImageTrigger.data('image-url');
+      const imageId = $shareImageTrigger.data('image-id');
 
       this.setImageInfo(imageUrl, imageId);
       this.setFormAction(imageId);
