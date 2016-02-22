@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'images#index'
 
   resources :images do
-    post 'share', on: :member
+    post :share, on: :member
   end
 
   resources :tags, only: [:index]
