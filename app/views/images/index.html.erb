@@ -6,9 +6,9 @@
   <%= render @images %>
 </div>
 
-<%= render partial: 'images/share_image/modal',
+<%= render partial: 'images/share/modal',
                     locals: { share_image_form: ShareImageForm.new } %>
-<%= render partial: 'images/share_image/success_message'%>
+<%= render partial: 'images/share/success_modal'%>
 
 <% content_for :javascript do %>
   <%= javascript_include_tag 'images/index/index' %>

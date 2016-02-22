@@ -7,9 +7,9 @@ const NOT_FOUND = 404;
 
 class ShareImageModal  {
 
-  constructor() {
-    this.$modal = $('.js-share-image-modal');
-    this.$successMessage = $('.js-share-image-success-message');
+  constructor(shareImageModalClass, successModalClass) {
+    this.$modal = $(shareImageModalClass);
+    this.$successModal = $(successModalClass);
   }
 
   resetToBlankForm() {
@@ -34,7 +34,7 @@ class ShareImageModal  {
 
   handleSharingSuccess() {
     this.$modal.modal('hide');
-    this.$successMessage.modal('show');
+    this.$successModal.modal('show');
   }
 
   handleSharingFailure({ status, responseJSON }) {
