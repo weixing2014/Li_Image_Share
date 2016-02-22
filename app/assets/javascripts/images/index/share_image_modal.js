@@ -49,7 +49,7 @@ class ShareImageModal  {
   }
 
   addShareEvents() {
-    this.$modal.on('show.bs.modal', (event)=> {
+    this.$modal.on('show.bs.modal', (event) => {
       const $shareImageTrigger = $(event.relatedTarget);
       const imageUrl = $shareImageTrigger.data('image-url');
       const imageId = $shareImageTrigger.data('image-id');
@@ -58,17 +58,15 @@ class ShareImageModal  {
       this.setFormAction(imageId);
     });
 
-    this.$modal.on('shown.bs.modal', ()=> {
+    this.$modal.on('shown.bs.modal', () => {
       this.$modal.find('.js-email-recipient').focus();
     });
 
-    this.$modal.on('hidden.bs.modal', ()=> {
-      this.resetToBlankForm();
-    });
+    this.$modal.on('hidden.bs.modal', this.resetToBlankForm.bind(this));
 
     this.$modal.on('ajax:success', this.handleSharingSuccess.bind(this));
 
-    this.$modal.on('ajax:error', (event, xhr)=> {
+    this.$modal.on('ajax:error', (event, xhr) => {
       this.handleSharingFailure(xhr);
     });
   }
