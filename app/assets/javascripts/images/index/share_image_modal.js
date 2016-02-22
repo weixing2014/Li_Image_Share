@@ -17,7 +17,7 @@ class ShareImageModal  {
     this.$modal.find('.js-error-message').remove();
   }
 
-  setErrorMsgForm(responseJSON) {
+  rerenderFormWithErrors(responseJSON) {
     this.$modal.find('form').replaceWith(responseJSON.form_html);
   }
 
@@ -39,7 +39,7 @@ class ShareImageModal  {
 
   handleSharingFailure({ status, responseJSON }) {
     if (status == UNPROCESSABLE_ENTITY) {
-      this.setErrorMsgForm(responseJSON);
+      this.rerenderFormWithErrors(responseJSON);
     } else if (status == NOT_FOUND) {
       this.$modal.modal('hide');
       alert('Sorry, the image has been deleted so that it cannot be shared');
