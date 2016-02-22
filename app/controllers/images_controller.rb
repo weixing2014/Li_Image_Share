@@ -63,7 +63,7 @@ class ImagesController < ApplicationController
 
     if share_image_form.valid?
       ImageMailer.share_image_email(@image, share_image_form.recipient,
-                                    share_image_form.subject) .deliver_now
+                                    share_image_form.subject).deliver_now
 
       head :ok
     else
@@ -87,7 +87,7 @@ class ImagesController < ApplicationController
     if request.xhr?
       head :not_found
     else
-      fail exception
+      raise exception
     end
   end
 end
