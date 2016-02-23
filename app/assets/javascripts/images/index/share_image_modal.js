@@ -27,7 +27,7 @@ class ShareImageModal  {
     $form.attr('action', formAction);
   }
 
-  setImageInfo(imageUrl, imageId) {
+  setImageInfo(imageUrl) {
     const $imagePreview = this.$modal.find('.js-share-image-preview');
     $imagePreview.attr('src', imageUrl);
   }
@@ -54,7 +54,7 @@ class ShareImageModal  {
       const imageUrl = $shareImageTrigger.data('image-url');
       const imageId = $shareImageTrigger.data('image-id');
 
-      this.setImageInfo(imageUrl, imageId);
+      this.setImageInfo(imageUrl);
       this.setFormAction(imageId);
     });
 
