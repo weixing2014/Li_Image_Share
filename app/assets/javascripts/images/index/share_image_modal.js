@@ -7,9 +7,9 @@ const NOT_FOUND = 404;
 
 class ShareImageModal  {
 
-  constructor(shareImageModalClass, successModalClass) {
-    this.$modal = $(shareImageModalClass);
-    this.$successModal = $(successModalClass);
+  constructor({shareModalSelector, successModalSelector}) {
+    this.$modal = $(shareModalSelector);
+    this.$successModal = $(successModalSelector);
   }
 
   resetToBlankForm() {
