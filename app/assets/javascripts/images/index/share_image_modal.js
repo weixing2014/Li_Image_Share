@@ -13,7 +13,7 @@ class ShareImageModal  {
   }
 
   resetToBlankForm() {
-    this.$modal.find('input').not('[type=submit]').val('');
+    this.$modal.find('input:not([type=submit])').val('');
     this.$modal.find('.js-error-message').remove();
   }
 
