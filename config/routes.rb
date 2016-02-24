@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :tags, only: [:index]
 
+  get 'signup' => 'users#new'
+  resources :users, only: [:create]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
