@@ -29,7 +29,7 @@ class ImagesCrudTest < FlowTestCase
     fill_in '* Url', with: 'invalid'
     click_on 'Create Image'
 
-    assert_equal 2, input_error_messages_in_page
+    assert_equal 2, number_of_input_error_messages_in_page
     assert_equal 'is invalid!',
                  input_field_error_message_of('.image_url')
     assert_equal "can't be blank",
@@ -137,7 +137,7 @@ class ImagesCrudTest < FlowTestCase
 
     assert page.has_current_path? images_path(tag: 'green')
 
-    assert_equal 2, images_in_page
+    assert_equal 2, number_of_images_in_page
 
     images[0..1].each do |image|
       assert image_present? image.url
@@ -202,11 +202,11 @@ class ImagesCrudTest < FlowTestCase
     page.all('.js-tag-link').map(&:text)
   end
 
-  def input_error_messages_in_page
+  def number_of_input_error_messages_in_page
     page.all('.help-block').count
   end
 
-  def images_in_page
+  def number_of_images_in_page
     page.all('img').count
   end
 end
