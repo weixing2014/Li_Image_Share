@@ -4,7 +4,7 @@ class ImageMailerPreview < ActionMailer::Preview
     ImageMailer.share_image_email(Image.first, 'foo@bar.com', 'Hello, world')
   end
 
-  def share_image_email_whith_default_subject
-    ImageMailer.share_image_email(Image.first, 'foo@bar.com', nil)
+  def share_image_email_with_default_subject
+    ImageMailer.share_image_email(Image.first, 'foo@bar.com', '  ')
   end
 end

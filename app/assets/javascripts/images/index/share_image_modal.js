@@ -7,17 +7,17 @@ const NOT_FOUND = 404;
 
 class ShareImageModal  {
 
-  constructor() {
-    this.$modal = $('.js-share-image-modal');
-    this.$successMessage = $('.js-share-image-success-message');
+  constructor({shareModalSelector, successModalSelector}) {
+    this.$modal = $(shareModalSelector);
+    this.$successModal = $(successModalSelector);
   }
 
   resetToBlankForm() {
-    this.$modal.find('input').not(':last').val('');
+    this.$modal.find('input:not([type=submit])').val('');
     this.$modal.find('.js-error-message').remove();
   }
 
-  setErrorMsgForm(responseJSON) {
+  rerenderFormWithErrors(responseJSON) {
     this.$modal.find('form').replaceWith(responseJSON.form_html);
   }
 
@@ -27,19 +27,19 @@ class ShareImageModal  {
     $form.attr('action', formAction);
   }
 
-  setImageInfo(imageUrl, imageId) {
+  setImageInfo(imageUrl) {
     const $imagePreview = this.$modal.find('.js-share-image-preview');
     $imagePreview.attr('src', imageUrl);
   }
 
   handleSharingSuccess() {
     this.$modal.modal('hide');
-    this.$successMessage.modal('show');
+    this.$successModal.modal('show');
   }
 
   handleSharingFailure({ status, responseJSON }) {
     if (status == UNPROCESSABLE_ENTITY) {
-      this.setErrorMsgForm(responseJSON);
+      this.rerenderFormWithErrors(responseJSON);
     } else if (status == NOT_FOUND) {
       this.$modal.modal('hide');
       alert('Sorry, the image has been deleted so that it cannot be shared');
@@ -49,26 +49,24 @@ class ShareImageModal  {
   }
 
   addShareEvents() {
-    this.$modal.on('show.bs.modal', (event)=> {
-      const button = $(event.relatedTarget);
-      const imageUrl = button.data('image-url');
-      const imageId = button.data('image-id');
+    this.$modal.on('show.bs.modal', (event) => {
+      const $shareImageTrigger = $(event.relatedTarget);
+      const imageUrl = $shareImageTrigger.data('image-url');
+      const imageId = $shareImageTrigger.data('image-id');
 
-      this.setImageInfo(imageUrl, imageId);
+      this.setImageInfo(imageUrl);
       this.setFormAction(imageId);
     });
 
-    this.$modal.on('shown.bs.modal', ()=> {
+    this.$modal.on('shown.bs.modal', () => {
       this.$modal.find('.js-email-recipient').focus();
     });
 
-    this.$modal.on('hidden.bs.modal', ()=> {
-      this.resetToBlankForm();
-    });
+    this.$modal.on('hidden.bs.modal', this.resetToBlankForm.bind(this));
 
     this.$modal.on('ajax:success', this.handleSharingSuccess.bind(this));
 
-    this.$modal.on('ajax:error', (event, xhr)=> {
+    this.$modal.on('ajax:error', (event, xhr) => {
       this.handleSharingFailure(xhr);
     });
   }

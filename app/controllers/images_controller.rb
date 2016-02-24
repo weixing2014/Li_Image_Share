@@ -63,11 +63,11 @@ class ImagesController < ApplicationController
 
     if share_image_form.valid?
       ImageMailer.share_image_email(@image, share_image_form.recipient,
-                                    share_image_form.subject) .deliver_now
+                                    share_image_form.subject).deliver_now
 
       head :ok
     else
-      form_html = render_to_string partial: 'images/share_image/form',
+      form_html = render_to_string partial: 'images/share/form',
                                    object: share_image_form
       render json: { form_html: form_html }, status: :unprocessable_entity
     end
@@ -87,7 +87,7 @@ class ImagesController < ApplicationController
     if request.xhr?
       head :not_found
     else
-      fail exception
+      raise exception
     end
   end
 end
