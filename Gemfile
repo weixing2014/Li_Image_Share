@@ -66,6 +66,8 @@ end
 
 group :test do
   gem 'mocha'
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end
 
 group :production do
