@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     log_in_params = params.require(:session)
-                          .permit(:email, :password)
+                          .permit(:email, :password, :remember_me)
 
     @log_in_form = LogInForm.new(log_in_params)
 
@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:session][:password])
       log_in user
+      (log_in_params[:remember_me] == '1') ? remember(user) : forget(user)
       redirect_to root_path
     else
       flash.now[:error] = 'Invalid email/password combination'
@@ -25,7 +26,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_path
   end
 end

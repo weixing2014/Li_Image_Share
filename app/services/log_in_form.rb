@@ -1,7 +1,7 @@
 class LogInForm
   include ActiveModel::Model
 
-  attr_accessor :email, :password
+  attr_accessor :email, :password, :remember_me
 
   validates :email,
             presence: true,
