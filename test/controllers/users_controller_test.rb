@@ -17,6 +17,7 @@ class UsersControllerTest < ActionController::TestCase
                    elements.map(&:text)
     end
     assert_select 'form#new_user'
+    assert_not is_logged_in?
   end
 
   test 'create a new user successfully' do
@@ -27,9 +28,10 @@ class UsersControllerTest < ActionController::TestCase
                             password_confirmation: 'foobar' }
     end
 
+    assert_redirected_to root_path
     assert_equal 'Li Zhang', User.last.name
     assert_equal 'user@example.com', User.last.email
     assert_equal 'You have successfully signed up!', flash[:notice]
-    assert_redirected_to root_path
+    assert is_logged_in?
   end
 end
