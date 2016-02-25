@@ -13,7 +13,7 @@ class ShareImageFlowTest < FlowTestCase
 
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on 'Share'
 
@@ -57,7 +57,7 @@ class ShareImageFlowTest < FlowTestCase
 
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on 'Share'
 

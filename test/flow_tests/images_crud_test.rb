@@ -10,7 +10,7 @@ class ImagesCrudTest < FlowTestCase
   test 'create a new image' do
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on 'New Image'
 
@@ -51,7 +51,7 @@ class ImagesCrudTest < FlowTestCase
 
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on_image image
 
@@ -97,7 +97,7 @@ class ImagesCrudTest < FlowTestCase
 
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on_image image
 
@@ -125,7 +125,7 @@ class ImagesCrudTest < FlowTestCase
 
     visit root_path
 
-    assert page.has_title? 'LiImageShare'
+    assert page.has_title? 'FunGraph'
 
     click_on 'Tags'
 
