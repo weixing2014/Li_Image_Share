@@ -34,14 +34,12 @@ gem 'simple_form'
 
 gem 'validates_email_format_of'
 
-gem 'bcrypt'
-
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -76,4 +74,3 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
-
