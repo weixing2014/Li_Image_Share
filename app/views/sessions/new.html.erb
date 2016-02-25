@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="log-in-form__header">Log in</h1>
+    <%= simple_form_for @log_in_form, as: :session, url: login_path, method: :post do |f| %>
+      <%= f.input :email, label: 'Email' %>
+      <%= f.input :password, label: 'Password' %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', root_path, class: 'btn btn-warning' %>
+    <% end %>
+
+    <p class="log-in-form__sign-up-link">New User? <%= link_to 'Sign up now!', signup_path %></p>
+  </div>
+</div>
