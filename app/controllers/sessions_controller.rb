@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
       render(:new, status: :unprocessable_entity) && return
     end
 
-    user = User.find_by(email: params[:session][:email])
+    user = User.find_by(email: log_in_params[:email])
 
-    if user && user.authenticate(params[:session][:password])
+    if user && user.authenticate(log_in_params[:password])
       log_in user
       (log_in_params[:remember_me] == '1') ? remember(user) : forget(user)
       redirect_to root_path
