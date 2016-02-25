@@ -8,5 +8,5 @@ class LogInForm
             length: { maximum: 255 },
             email_format: { message: 'is invalid' }
 
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true
 end

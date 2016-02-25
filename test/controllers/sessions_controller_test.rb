@@ -5,9 +5,7 @@ class SessionsControllerTest < ActionController::TestCase
 
     assert_response :unprocessable_entity
     assert_select 'span.help-block' do |elements|
-      assert_equal ['is invalid',
-                    'is too short (minimum is 6 characters)'],
-                   elements.map(&:text)
+      assert_equal ['is invalid'], elements.map(&:text)
     end
     assert_select 'form#new_session'
     assert_not is_logged_in?

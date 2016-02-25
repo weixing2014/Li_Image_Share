@@ -43,9 +43,4 @@ class LogInFormTest < ActiveSupport::TestCase
     @log_in_form.password = ' ' * 6
     assert_predicate @log_in_form, :invalid?
   end
-
-  test 'password should have a minimum length' do
-    @log_in_form.password = 'a' * 5
-    assert_predicate @log_in_form, :invalid?
-  end
 end
