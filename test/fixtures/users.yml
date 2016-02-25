@@ -1,0 +1,4 @@
+li:
+  name: Li Zhang
+  email: hello@world.com
+  password_digest: <%= User.digest 'password' %>
