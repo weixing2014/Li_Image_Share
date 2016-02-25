@@ -1,17 +1,17 @@
 class User < ActiveRecord::Base
   attr_accessor :remember_token
 
-  before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
   validates :email,
             presence: true,
             length: { maximum: 255 },
             email_format: { message: 'is invalid' },
             uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 6 }
 
   has_secure_password
 
-  validates :password, presence: true, length: { minimum: 6 }
+  before_save { self.email = email.downcase }
 
   def self.digest(string)
     if ActiveModel::SecurePassword.min_cost
